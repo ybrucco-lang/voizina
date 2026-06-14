@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Voizina — Espace Fondateur</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:#0a0f1e;color:#e2e8f0;min-height:100vh;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-thumb{background:#334155;border-radius:3px;}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;background:linear-gradient(135deg,#0a0f1e,#0d1b2a);}
+.login-box{background:#111827;border:1px solid #1e293b;border-radius:20px;padding:2.5rem;max-width:420px;width:100%;box-shadow:0 25px 80px rgba(0,0,0,.6);}
+.fg{margin-bottom:14px;}
+.fg label{font-size:11px;font-weight:700;color:#94a3b8;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.fg input{width:100%;padding:11px 14px;background:#1e293b;border:1.5px solid #334155;border-radius:9px;color:#e2e8f0;font-size:14px;outline:none;}
+.fg input:focus{border-color:#f59e0b;}
+.btn-login{width:100%;padding:13px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;border-radius:11px;font-weight:800;font-size:15px;cursor:pointer;margin-top:6px;}
+.err{background:#ef444411;border:1px solid #ef444433;color:#f87171;font-size:12px;padding:9px 13px;border-radius:8px;margin-bottom:11px;font-weight:600;}
+.hint{background:#f59e0b11;border:1px solid #f59e0b33;border-radius:9px;padding:9px 13px;font-size:11px;color:#f59e0b;margin-top:13px;}
+.dash{display:flex;min-height:100vh;}
+.sb{width:220px;background:#0d1117;border-right:1px solid #1e293b;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0;}
+.sb-top{padding:1.1rem 1.2rem;border-bottom:1px solid #1e293b;}
+.sb-logo{font-size:16px;font-weight:800;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 1.1rem;cursor:pointer;border-left:3px solid transparent;color:#64748b;font-size:12px;font-weight:500;transition:all .15s;}
+.ni.active{background:rgba(245,158,11,.1);border-left-color:#f59e0b;color:#f59e0b;font-weight:700;}
+.ni:hover:not(.active){background:#1e293b22;color:#94a3b8;}
+.nic{font-size:13px;width:16px;text-align:center;}
+.nb{margin-left:auto;background:#ef4444;color:#fff;border-radius:20px;font-size:9px;padding:1px 5px;font-weight:700;}
+.sb-ft{padding:.9rem 1.1rem;border-top:1px solid #1e293b;margin-top:auto;}
+.fav{display:flex;align-items:center;gap:8px;padding:8px 10px;background:linear-gradient(135deg,#f59e0b11,#ef444411);border:1px solid #f59e0b33;border-radius:10px;margin-bottom:8px;}
+.fav-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;}
+.tb{background:#0d1117;border-bottom:1px solid #1e293b;padding:0 1.4rem;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;}
+.content{padding:1.3rem;flex:1;}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.sc{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:1rem;position:relative;overflow:hidden;}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.sc.g::before{background:linear-gradient(90deg,#10b981,#34d399);}
+.sc.b::before{background:linear-gradient(90deg,#3b82f6,#60a5fa);}
+.sc.gold::before{background:linear-gradient(90deg,#f59e0b,#fbbf24);}
+.sc.p::before{background:linear-gradient(90deg,#8b5cf6,#a78bfa);}
+.sc.r::before{background:linear-gradient(90deg,#ef4444,#f87171);}
+.sc.o::before{background:linear-gradient(90deg,#f97316,#fb923c);}
+.sc.c::before{background:linear-gradient(90deg,#06b6d4,#22d3ee);}
+.sn{font-size:22px;font-weight:800;color:#f1f5f9;line-height:1;}
+.sl{font-size:10px;color:#64748b;margin-top:4px;}
+.card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:1rem 1.2rem;margin-bottom:12px;}
+.ct{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:11px;display:flex;align-items:center;justify-content:space-between;gap:6px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+table{width:100%;border-collapse:collapse;font-size:11.5px;}
+th{background:#0d1117;padding:8px 10px;text-align:left;font-weight:700;color:#64748b;border-bottom:1px solid #1e293b;white-space:nowrap;font-size:10px;text-transform:uppercase;}
+td{padding:9px 10px;border-bottom:1px solid #1e293b15;color:#cbd5e1;vertical-align:middle;}
+tr:hover td{background:#1e293b22;}
+.bdg{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;}
+.bar-w{display:flex;gap:3px;align-items:flex-end;height:110px;padding-bottom:3px;border-bottom:1px solid #1e293b;}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bar{border-radius:3px 3px 0 0;}
+.bl{font-size:9px;color:#64748b;}.bv{font-size:9px;font-weight:700;color:#f59e0b;}
+.pg{margin-bottom:8px;}
+.pr{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;color:#cbd5e1;}
+.pb{background:#1e293b;border-radius:20px;height:5px;}
+.pf{border-radius:20px;height:5px;}
+input,select,textarea{background:#1e293b;border:1.5px solid #334155;border-radius:8px;color:#e2e8f0;padding:8px 10px;font-size:12px;width:100%;outline:none;font-family:inherit;}
+input:focus,select:focus,textarea:focus{border-color:#f59e0b;}
+textarea{resize:vertical;}
+label{font-size:11px;font-weight:600;color:#94a3b8;display:block;margin-bottom:3px;}
+.btn{padding:7px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px;border:none;}
+.bg{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;}
+.bo{background:transparent;border:1.5px solid #f59e0b;color:#f59e0b;}
+.bb{background:#3b82f6;color:#fff;}
+.bgr{background:#10b981;color:#fff;}
+.bd{background:#ef4444;color:#fff;}
+.bgy{background:#334155;color:#94a3b8;}
+.bsm{padding:4px 8px;font-size:10px;border-radius:6px;font-weight:600;cursor:pointer;border:none;}
+.ia{display:flex;gap:3px;flex-wrap:wrap;}
+.av{width:28px;height:28px;border-radius:50%;background:#1e293b;color:#94a3b8;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.sb2{background:#1e293b;border:1.5px solid #334155;border-radius:8px;padding:7px 12px;font-size:12px;color:#e2e8f0;outline:none;width:220px;}
+.sb2:focus{border-color:#f59e0b;}
+.fch{background:#1e293b;border:1px solid #334155;border-radius:20px;padding:3px 10px;font-size:10px;color:#94a3b8;cursor:pointer;font-weight:500;}
+.fch.on{background:rgba(245,158,11,.15);border-color:#f59e0b;color:#f59e0b;font-weight:700;}
+.toast{position:fixed;top:18px;right:18px;padding:9px 16px;border-radius:9px;font-size:12px;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4);max-width:280px;color:#fff;}
+.al{border-radius:8px;padding:10px 13px;font-size:12px;margin-bottom:9px;display:flex;gap:8px;}
+.aw{background:#f59e0b11;border:1px solid #f59e0b33;color:#fbbf24;}
+.ad{background:#ef444411;border:1px solid #ef444433;color:#f87171;}
+.ai{background:#3b82f611;border:1px solid #3b82f633;color:#60a5fa;}
+.sync-badge{position:fixed;bottom:16px;right:16px;background:#10b981;color:#fff;border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.docprev{background:#111827;border:1px solid #10b98155;border-radius:6px;padding:8px;font-size:11px;color:#cbd5e1;}
+.docprev img{width:100%;max-height:160px;object-fit:contain;border-radius:6px;background:#0a0f1e;cursor:pointer;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const FOUNDER={email:"youss@voizina.fr",password:"Fondateur2025!"};
+const LS_KEY="voizina_shared_state";
+
+function loadShared(){
+  try{const d=localStorage.getItem(LS_KEY);return d?JSON.parse(d):null;}catch(e){return null;}
+}
+function saveShared(){
+  const d={members,demandes,transactions,signalements,tickets,services,conversations,notifications,params,ts:Date.now()};
+  try{localStorage.setItem(LS_KEY,JSON.stringify(d));}catch(e){}
+}
+function openData(dataUrl){
+  try{
+    const parts=dataUrl.split(",");
+    const meta=parts[0];
+    const b64=parts[1];
+    const mime=meta.match(/:(.*?);/)[1];
+    const bin=atob(b64);
+    const arr=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+    const blob=new Blob([arr],{type:mime});
+    const url=URL.createObjectURL(blob);
+    window.open(url,"_blank");
+  }catch(e){window.open(dataUrl,"_blank");}
+}
+window.openData=openData;
+
+let members=[];
+let demandes=[];
+let transactions=[];
+let signalements=[];
+let tickets=[];
+let services=[];
+let conversations=[];
+let notifications=[];
+let params={commission:18,zone:"Côte d'Azur",villes:"Nice, Antibes, Cannes, Menton, Monaco, Vence, Grasse",email_support:"support@voizina.fr",motsBanis:"spam, arnaque, fraude, payer en dehors, sans commission, direct",kyc_obligatoire:true,msg_scan:true};
+
+const saved=loadShared();
+if(saved){
+  if(saved.members)members=saved.members;
+  if(saved.demandes)demandes=saved.demandes;
+  if(saved.transactions)transactions=saved.transactions;
+  if(saved.signalements)signalements=saved.signalements;
+  if(saved.tickets)tickets=saved.tickets;
+  if(saved.services)services=saved.services;
+  if(saved.conversations)conversations=saved.conversations;
+  if(saved.notifications)notifications=saved.notifications;
+  if(saved.params)params=saved.params;
+}
+
+let S={
+  page:"login",tab:"overview",
+  loginError:"",loginLoading:false,
+  toast:null,
+  searchM:"",filterStatut:"tous",filterVerif:"tous",
+  searchD:"",filterDemande:"tous",
+  filterTxn:"tous",filterSig:"tous",filterTicket:"tous",
+  selConv:0,syncPulse:false,
+};
+
+function sync(){
+  const latest=loadShared();
+  if(latest){
+    if(latest.members)members=latest.members;
+    if(latest.demandes)demandes=latest.demandes;
+    if(latest.transactions)transactions=latest.transactions;
+    if(latest.signalements)signalements=latest.signalements;
+    if(latest.tickets)tickets=latest.tickets;
+    if(latest.services)services=latest.services;
+    if(latest.conversations)conversations=latest.conversations;
+    if(latest.notifications)notifications=latest.notifications;
+    if(latest.params)params=latest.params;
+  }
+  saveShared();
+  S.syncPulse=true;
+  render();
+  setTimeout(()=>{S.syncPulse=false;render();},1200);
+}
+
+function resetAll(){
+  if(!confirm("⚠️ Supprimer TOUTES les données (membres, annonces, transactions, etc.) ? Cette action est irréversible."))return;
+  members=[];demandes=[];transactions=[];signalements=[];tickets=[];services=[];conversations=[];notifications=[];
+  params={commission:18,zone:"Côte d'Azur",villes:"Nice, Antibes, Cannes, Menton, Monaco, Vence, Grasse",email_support:"support@voizina.fr",motsBanis:"spam, arnaque, fraude, payer en dehors, sans commission, direct",kyc_obligatoire:true,msg_scan:true};
+  try{localStorage.removeItem(LS_KEY);}catch(e){}
+  sync();toast("🗑️ Base réinitialisée !","#ef4444");
+}
+
+function set(p){Object.assign(S,p);render();}
+function toast(msg,c="#f59e0b"){set({toast:{msg,c}});setTimeout(()=>set({toast:null}),3000);}
+
+const TABS=[
+  ["overview","📊","Vue d'ensemble"],
+  ["membres","👥","Membres & Clients"],
+  ["prestataires","🔧","Prestataires"],
+  ["identites","🪪","Vérification Identité"],
+  ["messages","💬","Messagerie"],
+  ["demandes","📋","Annonces"],
+  ["transactions","💰","Transactions"],
+  ["litiges","⚖️","Litiges & Support"],
+  ["signalements","🚨","Signalements"],
+  ["finances","📈","Finances"],
+  ["config","⚙️","Configuration"],
+];
+
+function render(){
+  const app=document.getElementById("app");
+  if(S.page==="login"){app.innerHTML=rl();bl();return;}
+  app.innerHTML=rd();bd();
+}
+
+function rl(){return`
+  ${S.toast?`<div class="toast" style="background:${S.toast.c}">${S.toast.msg}</div>`:""}
+  <div class="login-wrap"><div class="login-box">
+    <div style="text-align:center;margin-bottom:1.8rem;">
+      <div style="font-size:42px;margin-bottom:8px;">🏖️</div>
+      <div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Voizina</div>
+      <div style="font-size:11px;color:#64748b;margin-top:3px;">Côte d'Azur</div>
+      <div style="display:inline-block;background:linear-gradient(135deg,#f59e0b22,#ef444422);color:#f59e0b;border:1px solid #f59e0b44;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:700;margin-top:7px;">👑 Espace Fondateur</div>
+    </div>
+    ${S.loginError?`<div class="err">⚠️ ${S.loginError}</div>`:""}
+    <div class="fg"><label>Email Fondateur</label><input type="email" id="fe" placeholder="youss@voizina.fr"/></div>
+    <div class="fg"><label>Mot de passe</label><input type="password" id="fp" placeholder="••••••••"/></div>
+    <button class="btn-login" id="bln">${S.loginLoading?"⏳ Connexion...":"🔐 Accéder au tableau de bord"}</button>
+    <div class="hint">👑 Démo : youss@voizina.fr / Fondateur2025!</div>
+  </div></div>`;}
+
+function bl(){
+  document.getElementById("bln")?.addEventListener("click",()=>{
+    const e=document.getElementById("fe").value,p=document.getElementById("fp").value;
+    if(!e||!p){set({loginError:"Remplissez tous les champs"});return;}
+    set({loginLoading:true,loginError:""});
+    setTimeout(()=>{
+      if(e===FOUNDER.email&&p===FOUNDER.password){
+        set({page:"dash",loginLoading:false});
+        sync();
+        toast("👑 Bienvenue Youss !");
+      }else set({loginLoading:false,loginError:"Identifiants incorrects."});
+    },800);
+  });
+  document.getElementById("fp")?.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("bln")?.click();});
+}
+
+function nbAlerts(){
+  return signalements.filter(s=>s.statut==="en attente").length
+    +tickets.filter(t=>t.statut==="ouvert").length
+    +transactions.filter(t=>t.litige).length
+    +members.filter(m=>m.id_statut==="en attente").length
+    +conversations.filter(c=>c.flag).length;
+}
+
+function rd(){
+  const kycP=members.filter(m=>m.id_statut==="en attente").length;
+  const sigP=signalements.filter(s=>s.statut==="en attente").length;
+  const tkP=tickets.filter(t=>t.statut==="ouvert").length;
+  const flagM=conversations.filter(c=>c.flag).length;
+  return`
+  ${S.toast?`<div class="toast" style="background:${S.toast.c}">${S.toast.msg}</div>`:""}
+  ${S.syncPulse?`<div class="sync-badge">🔄 Synchronisé</div>`:""}
+  <div class="dash">
+    <div class="sb">
+      <div class="sb-top">
+        <div class="sb-logo">🏖️ Voizina</div>
+        <div style="font-size:9px;color:#64748b;margin-top:1px;">Espace Fondateur</div>
+      </div>
+      <div style="flex:1;overflow-y:auto;">
+        ${TABS.map(([id,ic,lb])=>{
+          let nb=0;
+          if(id==="identites")nb=kycP;
+          if(id==="signalements")nb=sigP;
+          if(id==="litiges")nb=tkP+transactions.filter(t=>t.litige).length;
+          if(id==="messages")nb=flagM;
+          return`<div class="ni ${S.tab===id?"active":""}" data-tab="${id}">
+            <span class="nic">${ic}</span><span style="flex:1;">${lb}</span>
+            ${nb>0?`<span class="nb">${nb}</span>`:""}
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="sb-ft">
+        <div class="fav"><div class="fav-av">YB</div><div><div style="font-size:11px;font-weight:700;color:#e2e8f0;">Youss Brucco</div><div style="font-size:9px;color:#f59e0b;font-weight:600;">👑 Fondateur & CEO</div></div></div>
+        <button style="width:100%;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.25);border-radius:7px;padding:6px;cursor:pointer;font-size:10px;font-weight:600;" id="btn-logout">🚪 Se déconnecter</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="tb">
+        <div style="font-size:14px;font-weight:700;color:#e2e8f0;">${TABS.find(t=>t[0]===S.tab)?.[1]} ${TABS.find(t=>t[0]===S.tab)?.[2]}</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div style="background:#10b98111;border:1px solid #10b98133;color:#10b981;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:700;">🔄 Sync localStorage</div>
+          ${nbAlerts()>0?`<div style="background:#ef444422;border:1px solid #ef444433;color:#f87171;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:700;">🚨 ${nbAlerts()} alertes</div>`:""}
+          <span style="background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:10px;padding:3px 11px;border-radius:20px;font-weight:700;">👑 FONDATEUR</span>
+          <button class="btn bd" id="btn-reset-all-top" style="font-size:10px;padding:4px 10px;">🗑️ Réinitialiser tout</button>
+        </div>
+      </div>
+      <div class="content">${renderTab()}</div>
+    </div>
+  </div>`;}
+
+function renderTab(){
+  switch(S.tab){
+    case"overview":return tOverview();
+    case"membres":return tMembres("particulier");
+    case"prestataires":return tMembres("pro");
+    case"identites":return tIdentites();
+    case"messages":return tMessages();
+    case"demandes":return tDemandes();
+    case"transactions":return tTransactions();
+    case"litiges":return tLitiges();
+    case"signalements":return tSignalements();
+    case"finances":return tFinances();
+    case"config":return tConfig();
+    default:return"";
+  }
+}
+
+// ══ OVERVIEW ════════════════════════════════════════════════
+function tOverview(){
+  const tc=transactions.reduce((s,t)=>s+t.comm,0);
+  const tv=transactions.reduce((s,t)=>s+t.montant,0);
+  return`
+  <div class="sg">
+    ${[
+      ["gold",members.length,"Membres"],
+      ["g",tc.toFixed(0)+"€","Revenus Voizina"],
+      ["b",tv.toFixed(0)+"€","Volume transactions"],
+      ["r",transactions.filter(t=>t.litige).length,"Litiges actifs"],
+      ["o",members.filter(m=>m.id_statut==="en attente").length,"KYC en attente"],
+      ["p",signalements.filter(s=>s.statut==="en attente").length,"Signalements"],
+      ["c",conversations.filter(c=>c.flag).length,"Messages flaggés"],
+      ["b",tickets.filter(t=>t.statut==="ouvert").length,"Tickets ouverts"],
+    ].map(([c,n,l])=>`<div class="sc ${c}"><div class="sn">${n}</div><div class="sl">${l}</div></div>`).join("")}
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct">📊 CA Voizina mensuel (€)</div>
+      <div class="bar-w">
+        ${[["Jan",0],["Fév",0],["Mar",0],["Avr",0],["Mai",0],["Juin",0]].map(([m,v])=>`
+          <div class="bc"><div class="bv">${v}€</div><div class="bar" style="height:2px;width:70%;background:linear-gradient(to top,#f59e0b,#fbbf24);"></div><div class="bl">${m}</div></div>`).join("")}
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">🚨 Alertes urgentes</div>
+      ${members.filter(m=>m.id_statut==="en attente").map(m=>`
+        <div class="al ai">🪪 <div><strong>KYC en attente</strong> — ${m.nom}</div><button class="btn bsm bb" style="margin-left:auto;" onclick="set({tab:'identites'})">Vérifier</button></div>`).join("")}
+      ${conversations.filter(c=>c.flag).map(c=>`
+        <div class="al ad">💬 <div><strong>Message suspect</strong> — ${c.u1||"?"} & ${c.u2||"?"}</div><button class="btn bsm bd" style="margin-left:auto;" onclick="set({tab:'messages'})">Voir</button></div>`).join("")}
+      ${signalements.filter(s=>s.statut==="en attente").map(s=>`
+        <div class="al ad">🚨 <strong>${s.cible}</strong> — ${s.raison}</div>`).join("")}
+      ${transactions.filter(t=>t.litige).map(t=>`
+        <div class="al aw">⚖️ <strong>Litige</strong> — ${t.service}</div>`).join("")}
+      ${nbAlerts()===0?`<div style="text-align:center;color:#64748b;padding:1rem;font-size:12px;">✅ Aucune alerte</div>`:""}
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct">👥 Répartition membres</div>
+      ${members.length===0?`<div style="text-align:center;color:#64748b;padding:1rem;font-size:12px;">Aucun membre pour le moment</div>`:[
+        ["Prestataires Pro",members.filter(m=>m.role==="pro").length,"#8b5cf6"],
+        ["Clients particuliers",members.filter(m=>m.role==="particulier").length,"#3b82f6"],
+        ["Identité vérifiée",members.filter(m=>m.id_statut==="approuvé").length,"#10b981"],
+        ["KYC en attente",members.filter(m=>m.id_statut==="en attente").length,"#f59e0b"],
+        ["Suspendus",members.filter(m=>m.statut==="suspendu").length,"#ef4444"],
+      ].map(([l,n,c])=>`<div class="pg"><div class="pr"><span>${l}</span><span style="color:${c};font-weight:700;">${n}</span></div><div class="pb"><div class="pf" style="width:${members.length?(n/members.length*100):0}%;background:${c};"></div></div></div>`).join("")}
+    </div>
+    <div class="card">
+      <div class="ct">💰 Dernières transactions</div>
+      ${transactions.length===0?`<div style="text-align:center;color:#64748b;padding:1rem;font-size:12px;">Aucune transaction</div>`:transactions.slice(0,5).map(t=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1e293b15;">
+          <div><div style="font-size:11px;font-weight:600;color:#f1f5f9;">${t.service}</div><div style="font-size:9px;color:#64748b;">${t.id} · ${t.date}</div></div>
+          <div style="text-align:right;"><div style="font-size:12px;font-weight:700;color:#f59e0b;">${t.montant}€</div><span class="bdg" style="background:${t.litige?"#ef444422":t.statut==="payée"?"#10b98122":"#f59e0b22"};color:${t.litige?"#ef4444":t.statut==="payée"?"#10b981":"#f59e0b"};">${t.litige?"litige":t.statut}</span></div>
+        </div>`).join("")}
+    </div>
+  </div>`;}
+
+// ══ MEMBRES / PRESTATAIRES ══════════════════════════════════
+function tMembres(role){
+  const isP=role==="pro";
+  const list=members.filter(m=>{
+    if(m.role!==role)return false;
+    if(S.searchM&&!m.nom.toLowerCase().includes(S.searchM.toLowerCase())&&!m.email.toLowerCase().includes(S.searchM.toLowerCase()))return false;
+    if(S.filterStatut!=="tous"&&m.statut!==S.filterStatut)return false;
+    if(S.filterVerif!=="tous"&&m.id_statut!==S.filterVerif)return false;
+    return true;
+  });
+  return`
+  <div style="display:flex;gap:7px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+    <input class="sb2" placeholder="Rechercher..." value="${S.searchM}" id="sm"/>
+    ${["tous","actif","suspendu"].map(f=>`<span class="fch ${S.filterStatut===f?"on":""}" data-fs="${f}">${f==="tous"?"Tous statuts":f}</span>`).join("")}
+    ${["tous","approuvé","en attente","refusé","non soumis"].map(f=>`<span class="fch ${S.filterVerif===f?"on":""}" data-fv="${f}">${f==="tous"?"Tous KYC":"🪪 "+f}</span>`).join("")}
+    <span style="font-size:11px;color:#64748b;margin-left:auto;">${list.length} résultat(s)</span>
+  </div>
+  <div class="card" style="padding:0;overflow:auto;">
+    <table>
+      <thead><tr>
+        <th>${isP?"Prestataire":"Client"}</th><th>Ville</th><th>Note</th>
+        <th>Services</th><th>${isP?"Gains":"Dépenses"}</th>
+        <th>KYC</th><th>Statut</th><th>Inscrit</th><th>Actions</th>
+      </tr></thead>
+      <tbody>
+        ${list.length===0?`<tr><td colspan="9" style="text-align:center;color:#64748b;padding:2rem;">Aucun ${isP?"prestataire":"client"} inscrit</td></tr>`:list.map(m=>`<tr>
+          <td><div style="display:flex;align-items:center;gap:7px;"><div class="av">${m.av}</div><div><div style="font-size:11px;font-weight:600;color:#f1f5f9;">${m.nom}</div><div style="font-size:9px;color:#64748b;">${m.email}</div></div></div></td>
+          <td style="font-size:11px;">${m.ville}</td>
+          <td style="color:#fbbf24;font-weight:700;font-size:11px;">★ ${m.note||5}</td>
+          <td style="font-size:11px;">${m.nb_s||0}</td>
+          <td style="color:#10b981;font-weight:600;font-size:11px;">${isP?(m.gains||0):(m.depenses||0)}€</td>
+          <td><span class="bdg" style="background:${m.id_statut==="approuvé"?"#10b98122":m.id_statut==="en attente"?"#f59e0b22":m.id_statut==="refusé"?"#ef444422":"#64748b22"};color:${m.id_statut==="approuvé"?"#10b981":m.id_statut==="en attente"?"#f59e0b":m.id_statut==="refusé"?"#ef4444":"#94a3b8"};">${m.id_statut==="approuvé"?"✓ OK":m.id_statut==="en attente"?"⏳ Attente":m.id_statut==="refusé"?"✕ Refusé":"— Non soumis"}</span></td>
+          <td><span class="bdg" style="background:${m.statut==="actif"?"#10b98122":"#ef444422"};color:${m.statut==="actif"?"#10b981":"#ef4444"};">${m.statut}</span></td>
+          <td style="font-size:9px;color:#64748b;">${m.inscrit||"—"}</td>
+          <td><div class="ia">
+            ${m.id_statut==="en attente"?`<button class="btn bsm bb" data-kyc-ok="${m.id}">KYC ✓</button>`:""}
+            <button class="btn bsm ${m.statut==="actif"?"bd":"bgr"}" data-tm="${m.id}">${m.statut==="actif"?"Susp.":"Réact."}</button>
+            <button class="btn bsm bd" data-dm="${m.id}">✕</button>
+          </div></td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+  </div>`;}
+
+// ══ VÉRIFICATION IDENTITÉ (KYC) ═════════════════════════════
+const ALL_PRO_DOCS=["CNI ou Passeport","Permis de conduire","Carte grise du véhicule","Assurance véhicule","Contrôle technique","Justificatif domicile"];
+const ALL_PART_DOCS=["CNI ou Passeport"];
+
+function renderDocCard(k,v){
+  if(typeof v==="string"){
+    return `<div class="docprev"><div>✅ <strong style="color:#f1f5f9;">${k}</strong><div style="color:#64748b;font-size:10px;">${v}</div></div><button class="btn bsm bb" onclick="alert('Document enregistré dans un ancien format. Merci de le téléverser à nouveau pour obtenir un aperçu.');">📄 Voir le document</button></div>`;
+  }
+  const isImg=v.type&&v.type.startsWith("image/");
+  const isPdf=v.type==="application/pdf";
+  let body="";
+  if(isImg)body=`<img src="${v.data}" onclick="openData(this.src)"/>`;
+  else if(isPdf)body=`<button class="btn bsm bb" onclick="openData('${v.data}')">📄 Ouvrir le PDF</button>`;
+  else body=`<div style="color:#f59e0b;font-size:10px;">⚠️ Aperçu indisponible</div>`;
+  return `<div class="docprev"><div style="margin-bottom:6px;">✅ <strong style="color:#f1f5f9;">${k}</strong><div style="color:#64748b;font-size:10px;">${v.name||""}</div></div>${body}</div>`;
+}
+
+function tIdentites(){
+  return`
+  <div class="sg" style="grid-template-columns:repeat(4,1fr);">
+    ${[
+      ["g",members.filter(m=>m.id_statut==="approuvé").length,"Approuvées"],
+      ["o",members.filter(m=>m.id_statut==="en attente").length,"En attente"],
+      ["r",members.filter(m=>m.id_statut==="refusé").length,"Refusées"],
+      ["b",members.filter(m=>!m.docs||Object.keys(m.docs).length===0).length,"Sans document"],
+    ].map(([c,n,l])=>`<div class="sc ${c}"><div class="sn">${n}</div><div class="sl">${l}</div></div>`).join("")}
+  </div>
+  <div class="card" style="border-left:3px solid #f59e0b;margin-bottom:14px;">
+    <div class="ct">⏳ En attente (${members.filter(m=>m.id_statut==="en attente").length})</div>
+    ${members.filter(m=>m.id_statut==="en attente").map(m=>{
+      const need=m.role==="pro"?ALL_PRO_DOCS:ALL_PART_DOCS;
+      const docs=m.docs||{};
+      const missing=need.filter(d=>!docs[d]);
+      return`
+      <div style="background:#0d1117;border-radius:10px;padding:12px;margin-bottom:10px;border:1px solid #1e293b;">
+        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;">
+          <div style="font-size:24px;">🪪</div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;color:#f1f5f9;">${m.nom} <span class="bdg" style="background:${m.role==="pro"?"#8b5cf622":"#3b82f622"};color:${m.role==="pro"?"#a78bfa":"#60a5fa"};">${m.role}</span></div>
+            <div style="font-size:11px;color:#64748b;">${m.email} · 📍 ${m.ville}</div>
+          </div>
+        </div>
+        ${Object.keys(docs).length>0?`
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            ${Object.entries(docs).map(([k,v])=>renderDocCard(k,v)).join("")}
+          </div>`:`<div style="font-size:11px;color:#ef4444;margin-bottom:8px;">⚠️ Aucun document reçu</div>`}
+        ${missing.length>0?`<div style="font-size:11px;color:#f59e0b;margin-bottom:10px;">⏳ Manquants : ${missing.join(", ")}</div>`:`<div style="font-size:11px;color:#10b981;margin-bottom:10px;">✅ Tous les documents reçus</div>`}
+        <div class="ia">
+          <button class="btn bg" data-kyc-ok="${m.id}">✅ Approuver</button>
+          <button class="btn bd" data-kyc-ko="${m.id}">❌ Refuser</button>
+        </div>
+      </div>`;}).join("")||`<div style="text-align:center;color:#64748b;padding:2rem;">✅ Aucune vérification en attente</div>`}
+  </div>
+  <div class="card">
+    <div class="ct">📋 Historique</div>
+    <table>
+      <thead><tr><th>Membre</th><th>Rôle</th><th>Documents</th><th>Statut KYC</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${members.filter(m=>m.docs&&Object.keys(m.docs).length>0).map(m=>`<tr>
+          <td><div style="display:flex;align-items:center;gap:7px;"><div class="av">${m.av}</div><div style="font-size:11px;font-weight:600;color:#f1f5f9;">${m.nom}</div></div></td>
+          <td><span class="bdg" style="background:${m.role==="pro"?"#8b5cf622":"#3b82f622"};color:${m.role==="pro"?"#a78bfa":"#60a5fa"};">${m.role}</span></td>
+          <td style="font-size:11px;">${Object.keys(m.docs).length} document(s)</td>
+          <td><span class="bdg" style="background:${m.id_statut==="approuvé"?"#10b98122":m.id_statut==="en attente"?"#f59e0b22":"#ef444422"};color:${m.id_statut==="approuvé"?"#10b981":m.id_statut==="en attente"?"#f59e0b":"#ef4444"};">${m.id_statut}</span></td>
+          <td><div class="ia">
+            ${m.id_statut!=="approuvé"?`<button class="btn bsm bgr" data-kyc-ok="${m.id}">✓</button>`:""}
+            ${m.id_statut!=="refusé"?`<button class="btn bsm bd" data-kyc-ko="${m.id}">✕</button>`:""}
+          </div></td>
+        </tr>`).join("")||`<tr><td colspan="5" style="text-align:center;color:#64748b;padding:1.5rem;">Aucun document soumis pour le moment</td></tr>`}
+      </tbody>
+    </table>
+  </div>`;}
+
+// ══ MESSAGERIE ══════════════════════════════════════════════
+function tMessages(){
+  if(conversations.length===0)return`<div class="card" style="text-align:center;color:#64748b;padding:3rem;">💬 Aucune conversation pour le moment.</div>`;
+  const conv=conversations[S.selConv]||conversations[0];
+  return`
+  <div style="display:grid;grid-template-columns:240px 1fr;gap:12px;height:520px;">
+    <div class="card" style="padding:0;overflow-y:auto;">
+      <div style="padding:10px 12px;border-bottom:1px solid #1e293b;font-size:12px;font-weight:700;color:#f1f5f9;">Conversations</div>
+      ${conversations.map((c,i)=>{
+        const u1=c.u1||(c.participants?c.participants[0]:"?");
+        const u2=c.u2||(c.participants?c.participants[1]:"?");
+        return`<div style="padding:10px 12px;border-bottom:1px solid #1e293b22;cursor:pointer;background:${S.selConv===i?"#f59e0b0d":"transparent"};border-left:${S.selConv===i?"2px solid #f59e0b":"2px solid transparent"};" data-conv="${i}">
+          <div style="font-size:11px;font-weight:700;color:${c.flag?"#ef4444":"#f1f5f9"};">${c.flag?"🚩 ":""}${u1} & ${u2}</div>
+          <div style="font-size:9px;color:#64748b;">${c.msgs.length} message(s)</div>
+        </div>`;}).join("")}
+    </div>
+    <div class="card" style="padding:0;display:flex;flex-direction:column;">
+      <div style="padding:10px 14px;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:12px;font-weight:700;color:#f1f5f9;">${conv.u1||conv.participants?.[0]} ↔️ ${conv.u2||conv.participants?.[1]}</div>
+        <div class="ia">
+          ${conv.flag?`<button class="btn bsm bgr" data-unflag="${S.selConv}">✓ Lever flag</button>`:`<button class="btn bsm bd" data-flag="${S.selConv}">🚩 Signaler</button>`}
+        </div>
+      </div>
+      ${conv.flag?`<div class="al ad" style="margin:8px;">⚠️ <strong>Conversation flaggée</strong></div>`:""}
+      <div style="flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:6px;">
+        ${conv.msgs.map(m=>{
+          const from=m.from;
+          const isU2=(conv.participants?conv.participants[1]:conv.u2)===from;
+          return`
+          <div style="display:flex;flex-direction:column;align-items:${isU2?"flex-end":"flex-start"};">
+            <div style="font-size:9px;color:#64748b;margin-bottom:2px;">${from} · ${m.time||""}</div>
+            <div style="max-width:75%;padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.5;background:${isU2?"#1e3a5f":"#1e293b"};color:${isU2?"#93c5fd":"#cbd5e1"};">${m.txt}</div>
+          </div>`;}).join("")}
+      </div>
+    </div>
+  </div>`;}
+
+// ══ ANNONCES ════════════════════════════════════════════════
+function tDemandes(){
+  const filtD=demandes.filter(d=>{
+    if(S.searchD&&!d.titre.toLowerCase().includes(S.searchD.toLowerCase()))return false;
+    if(S.filterDemande!=="tous"&&d.statut!==S.filterDemande)return false;
+    return true;
+  });
+  return`
+  <div style="display:flex;gap:7px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+    <input class="sb2" placeholder="Rechercher annonce..." value="${S.searchD}" id="sd"/>
+    ${["tous","active","en cours","terminée","suspendue"].map(f=>`<span class="fch ${S.filterDemande===f?"on":""}" data-fd="${f}">${f==="tous"?"Toutes":f}</span>`).join("")}
+    <span style="font-size:11px;color:#64748b;margin-left:auto;">${filtD.length} annonce(s)</span>
+  </div>
+  <div class="card" style="padding:0;overflow:auto;">
+    <table>
+      <thead><tr><th>Titre</th><th>Catégorie</th><th>Ville</th><th>Prix</th><th>Commission</th><th>Auteur</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${filtD.length===0?`<tr><td colspan="9" style="text-align:center;color:#64748b;padding:2rem;">Aucune annonce</td></tr>`:filtD.map(d=>`<tr>
+          <td style="font-weight:600;color:#f1f5f9;font-size:11px;">${d.titre}</td>
+          <td style="font-size:11px;">${d.cat}</td>
+          <td style="font-size:11px;">${d.ville}</td>
+          <td style="font-weight:700;color:#f59e0b;font-size:11px;">${d.prix}€</td>
+          <td style="color:#8b5cf6;font-size:11px;">${(d.prix*(params.commission/100)).toFixed(1)}€</td>
+          <td style="font-size:11px;">${d.auteur}</td>
+          <td><span class="bdg" style="background:${d.statut==="active"?"#10b98122":d.statut==="en cours"?"#f59e0b22":d.statut==="terminée"?"#64748b22":"#ef444422"};color:${d.statut==="active"?"#10b981":d.statut==="en cours"?"#f59e0b":d.statut==="terminée"?"#94a3b8":"#ef4444"};">${d.statut}</span></td>
+          <td style="font-size:10px;color:#64748b;">${d.date}</td>
+          <td><div class="ia">
+            <button class="btn bsm ${d.statut==="active"?"bd":"bgr"}" data-td="${d.id}">${d.statut==="active"?"Susp.":"Activer"}</button>
+            <button class="btn bsm bd" data-dd="${d.id}">✕</button>
+          </div></td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+  </div>`;}
+
+// ══ TRANSACTIONS ════════════════════════════════════════════
+function tTransactions(){
+  const filtT=transactions.filter(t=>{
+    if(S.filterTxn==="litige")return t.litige;
+    if(S.filterTxn!=="tous"&&t.statut!==S.filterTxn)return false;
+    return true;
+  });
+  const tv=transactions.reduce((s,t)=>s+t.montant,0);
+  const tc=transactions.reduce((s,t)=>s+t.comm,0);
+  return`
+  <div class="sg">
+    ${[["g",tv.toFixed(0)+"€","Volume total"],["p",tc.toFixed(0)+"€","Revenus Voizina"],["gold",transactions.filter(t=>t.statut==="payée").length+"/"+transactions.length,"Payées"],["r",transactions.filter(t=>t.litige).length,"Litiges"]].map(([c,n,l])=>`<div class="sc ${c}"><div class="sn">${n}</div><div class="sl">${l}</div></div>`).join("")}
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:12px;">
+    ${["tous","payée","en attente","litige"].map(f=>`<span class="fch ${S.filterTxn===f?"on":""}" data-ft="${f}">${f==="tous"?"Toutes":f}</span>`).join("")}
+  </div>
+  <div class="card" style="padding:0;overflow:auto;">
+    <table>
+      <thead><tr><th>ID</th><th>Service</th><th>Payeur</th><th>Prestataire</th><th>Montant</th><th>Commission</th><th>Net</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${filtT.length===0?`<tr><td colspan="10" style="text-align:center;color:#64748b;padding:2rem;">Aucune transaction</td></tr>`:filtT.map(t=>`<tr style="${t.litige?"background:#ef44440a":""}">
+          <td><code style="font-size:9px;background:#1e293b;padding:2px 5px;border-radius:4px;color:#94a3b8;">${t.id}</code></td>
+          <td style="font-weight:600;color:#f1f5f9;font-size:11px;">${t.service}</td>
+          <td style="font-size:11px;">${t.payeur}</td>
+          <td style="font-size:11px;">${t.presta}</td>
+          <td style="font-weight:700;color:#f59e0b;font-size:11px;">${t.montant}€</td>
+          <td style="color:#8b5cf6;font-weight:600;font-size:11px;">${t.comm}€</td>
+          <td style="color:#10b981;font-size:11px;">${t.net}€</td>
+          <td><span class="bdg" style="background:${t.litige?"#ef444422":t.statut==="payée"?"#10b98122":"#f59e0b22"};color:${t.litige?"#ef4444":t.statut==="payée"?"#10b981":"#f59e0b"};">${t.litige?"⚖️ litige":t.statut}</span></td>
+          <td style="font-size:10px;color:#64748b;">${t.date}</td>
+          <td><div class="ia">
+            ${t.litige?`<button class="btn bsm bgr" data-rl="${t.id}">Résoudre</button>`:""}
+            ${t.statut==="en attente"?`<button class="btn bsm bg" data-lib="${t.id}">Libérer</button>`:""}
+          </div></td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+  </div>`;}
+
+// ══ LITIGES & SUPPORT ═══════════════════════════════════════
+function tLitiges(){
+  const litiges=transactions.filter(t=>t.litige);
+  return`
+  <div class="g2">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:10px;">⚖️ Litiges (${litiges.length})</div>
+      ${litiges.map(t=>`
+        <div class="card" style="border-left:3px solid #ef4444;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <div><div style="font-size:12px;font-weight:700;color:#f1f5f9;">${t.service}</div><div style="font-size:10px;color:#64748b;">${t.id} · ${t.date}</div></div>
+            <div style="font-size:16px;font-weight:800;color:#f59e0b;">${t.montant}€</div>
+          </div>
+          <div style="font-size:11px;color:#94a3b8;margin-bottom:9px;">👤 ${t.payeur} ↔️ 🔧 ${t.presta}</div>
+          <div class="ia">
+            <button class="btn bgr bsm" data-rl="${t.id}">✅ Rembourser payeur</button>
+            <button class="btn bg bsm" data-lib="${t.id}">💰 Libérer au presta</button>
+          </div>
+        </div>`).join("")||`<div class="card" style="text-align:center;color:#64748b;padding:2rem;">✅ Aucun litige</div>`}
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:10px;">🎫 Tickets support</div>
+      <div style="display:flex;gap:4px;margin-bottom:10px;">
+        ${["tous","ouvert","en cours","fermé"].map(f=>`<span class="fch ${S.filterTicket===f?"on":""}" data-ftk="${f}" style="font-size:9px;padding:2px 8px;">${f}</span>`).join("")}
+      </div>
+      ${tickets.filter(t=>S.filterTicket==="tous"||t.statut===S.filterTicket).map(t=>`
+        <div class="card" style="border-left:3px solid ${t.priorite==="haute"?"#ef4444":t.priorite==="moyenne"?"#f59e0b":"#334155"};">
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+            <div style="font-size:11px;font-weight:700;color:#f1f5f9;">${t.sujet}</div>
+            <span class="bdg" style="background:${t.statut==="ouvert"?"#ef444422":t.statut==="en cours"?"#f59e0b22":"#64748b22"};color:${t.statut==="ouvert"?"#ef4444":t.statut==="en cours"?"#f59e0b":"#94a3b8"};">${t.statut}</span>
+          </div>
+          <div style="font-size:10px;color:#64748b;">👤 ${t.user} · ${t.date}</div>
+          <div style="font-size:10px;color:#94a3b8;margin-top:5px;font-style:italic;">"${t.msg.slice(0,70)}…"</div>
+          <div class="ia" style="margin-top:8px;">
+            <button class="btn bsm bgr" data-ctk="${t.id}">✅ Fermer</button>
+            <button class="btn bsm bb" data-iptk="${t.id}">🔄 En cours</button>
+          </div>
+        </div>`).join("")||`<div class="card" style="text-align:center;color:#64748b;padding:2rem;">✅ Aucun ticket</div>`}
+    </div>
+  </div>`;}
+
+// ══ SIGNALEMENTS ════════════════════════════════════════════
+function tSignalements(){
+  const filtS=signalements.filter(s=>S.filterSig==="tous"||s.statut===S.filterSig);
+  return`
+  <div class="g3" style="margin-bottom:14px;">
+    ${[[signalements.length,"Total","gold"],[signalements.filter(s=>s.statut==="en attente").length,"En attente","r"],[signalements.filter(s=>s.statut==="traité").length,"Traités","g"]].map(([n,l,c])=>`<div class="sc ${c}"><div class="sn">${n}</div><div class="sl">${l}</div></div>`).join("")}
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:12px;">
+    ${["tous","en attente","traité"].map(f=>`<span class="fch ${S.filterSig===f?"on":""}" data-fsig="${f}">${f==="tous"?"Tous":f==="en attente"?"🔴 En attente":"✅ Traités"}</span>`).join("")}
+  </div>
+  ${filtS.map(s=>`
+    <div class="card" style="${s.statut==="en attente"?"border-left:3px solid #ef4444;":""}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;">
+        <div style="display:flex;gap:7px;align-items:center;">
+          <strong style="color:#f1f5f9;font-size:12px;">${s.cible}</strong>
+          <span class="bdg" style="background:${s.priorite==="haute"?"#ef444422":"#f59e0b22"};color:${s.priorite==="haute"?"#ef4444":"#f59e0b"};">Priorité ${s.priorite}</span>
+        </div>
+        <span class="bdg" style="background:${s.statut==="en attente"?"#ef444422":"#10b98122"};color:${s.statut==="en attente"?"#ef4444":"#10b981"};">${s.statut}</span>
+      </div>
+      <div style="font-size:12px;color:#cbd5e1;margin-bottom:4px;">📌 <strong>${s.raison}</strong></div>
+      <div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">📝 ${s.details}</div>
+      <div style="font-size:10px;color:#475569;margin-bottom:9px;">Signalé par <strong style="color:#94a3b8;">${s.signaleur}</strong> · ${s.date}</div>
+      ${s.statut==="en attente"?`
+        <div class="ia">
+          <button class="btn bgr bsm" data-ts="${s.id}">✅ Traité</button>
+          ${s.type==="membre"?`<button class="btn bd bsm" data-ss="${s.id}">🚫 Suspendre</button>`:""}
+          <button class="btn bd bsm" data-ds="${s.id}">Supprimer</button>
+        </div>`:`<span style="font-size:10px;color:#64748b;">✅ Traité</span>`}
+    </div>`).join("")||`<div class="card" style="text-align:center;color:#64748b;padding:2rem;">✅ Aucun signalement</div>`}`;}
+
+// ══ FINANCES ════════════════════════════════════════════════
+function tFinances(){
+  const tv=transactions.reduce((s,t)=>s+t.montant,0);
+  const tc=transactions.reduce((s,t)=>s+t.comm,0);
+  return`
+  <div class="sg">
+    ${[["g",tv.toFixed(0)+"€","Volume total"],["p",tc.toFixed(0)+"€","Revenus ("+params.commission+"%)"],["r","0€","Charges mois"],["gold",tc.toFixed(0)+"€","EBITDA"]].map(([c,n,l])=>`<div class="sc ${c}"><div class="sn">${n}</div><div class="sl">${l}</div></div>`).join("")}
+  </div>
+  <div class="card">
+    <div class="ct">📊 P&L mensuel</div>
+    <table>
+      <thead><tr><th>Mois</th><th>Volume</th><th>Revenus</th><th>Charges</th><th>EBITDA</th><th>Marge</th></tr></thead>
+      <tbody>
+        ${[["Jan",0,0,0,0],["Fév",0,0,0,0],["Mar",0,0,0,0],["Avr",0,0,0,0],["Mai",0,0,0,0],["Juin",0,0,0,0]].map(([m,v,r,c,e])=>`
+          <tr><td style="font-weight:700;color:#f1f5f9;font-size:11px;">${m}</td><td style="color:#64748b;font-size:11px;">${v}€</td><td style="color:#10b981;font-weight:600;font-size:11px;">${r}€</td><td style="color:#ef4444;font-size:11px;">${c}€</td><td style="color:#f59e0b;font-weight:700;font-size:11px;">${e}€</td><td style="color:#64748b;font-size:11px;">0%</td></tr>`).join("")}
+      </tbody>
+    </table>
+  </div>`;}
+
+// ══ CONFIG ══════════════════════════════════════════════════
+function tConfig(){
+  return`
+  <div class="g2">
+    <div class="card">
+      <div class="ct">💰 Commission</div>
+      <div style="margin-bottom:10px;"><label>Taux (%)</label><input type="number" id="cfg-c" value="${params.commission}"/></div>
+      <div style="background:#f59e0b11;border:1px solid #f59e0b33;border-radius:7px;padding:8px 11px;font-size:11px;color:#f59e0b;margin-bottom:10px;">
+        Ex: 100€ → Voizina prélève ${params.commission}€ → prestataire reçoit ${100-params.commission}€
+      </div>
+      <button class="btn bg" id="btn-sc">Sauvegarder & Sync</button>
+    </div>
+    <div class="card">
+      <div class="ct">🗺️ Zone géographique</div>
+      <div style="margin-bottom:10px;"><label>Zone principale</label><input type="text" id="cfg-z" value="${params.zone}"/></div>
+      <div style="margin-bottom:10px;"><label>Villes couvertes</label><textarea id="cfg-v">${params.villes}</textarea></div>
+      <button class="btn bg" id="btn-sg">Sauvegarder & Sync</button>
+    </div>
+    <div class="card">
+      <div class="ct">⚠️ Mots-clés surveillés</div>
+      <div style="margin-bottom:10px;"><textarea id="cfg-mb" style="min-height:80px;">${params.motsBanis}</textarea></div>
+      <button class="btn bg" id="btn-sm2">Sauvegarder & Sync</button>
+    </div>
+    <div class="card">
+      <div class="ct">🔄 Synchronisation</div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:10px;">Les données sont synchronisées via localStorage (poll toutes les 2s) entre cet admin et l'app Voizina ouverte dans le même navigateur.</div>
+      <button class="btn bgr" id="btn-force-sync">🔄 Forcer la synchronisation</button>
+    </div>
+    <div class="card" style="border:1px solid #7c3aed55;grid-column:1/-1;">
+      <div class="ct" style="color:#a78bfa;">📥 Importer données de l'app</div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:10px;">Si la synchro automatique ne fonctionne pas (fichiers ouverts séparément), demandez à l'utilisateur de cliquer "📤 Exporter pour l'admin" dans l'app, puis collez les données ici.</div>
+      <textarea id="import-data" style="min-height:90px;font-family:monospace;font-size:10px;" placeholder='{"members":[...],"demandes":[...],...}'></textarea>
+      <button class="btn" style="margin-top:8px;background:#7c3aed;color:#fff;" id="btn-import">📥 Importer et fusionner</button>
+    </div>
+    <div class="card" style="border:1px solid #ef444433;grid-column:1/-1;">
+      <div class="ct" style="color:#f87171;">🗑️ Zone de danger</div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:10px;">Supprime TOUTES les données (membres, annonces, transactions...) de l'app et de l'admin. Action irréversible.</div>
+      <button class="btn bd" id="btn-reset-all">🗑️ Réinitialiser tout (vider la base)</button>
+    </div>
+  </div>`;}
+
+// ══ BINDINGS ════════════════════════════════════════════════
+function bd(){
+  document.querySelectorAll(".ni[data-tab]").forEach(el=>el.addEventListener("click",()=>set({tab:el.dataset.tab})));
+  document.getElementById("btn-logout")?.addEventListener("click",()=>{set({page:"login",tab:"overview"});toast("À bientôt 👑");});
+  document.getElementById("sm")?.addEventListener("input",e=>set({searchM:e.target.value}));
+  document.getElementById("sd")?.addEventListener("input",e=>set({searchD:e.target.value}));
+  document.querySelectorAll("[data-fs]").forEach(el=>el.addEventListener("click",()=>set({filterStatut:el.dataset.fs})));
+  document.querySelectorAll("[data-fv]").forEach(el=>el.addEventListener("click",()=>set({filterVerif:el.dataset.fv})));
+  document.querySelectorAll("[data-fd]").forEach(el=>el.addEventListener("click",()=>set({filterDemande:el.dataset.fd})));
+  document.querySelectorAll("[data-ft]").forEach(el=>el.addEventListener("click",()=>set({filterTxn:el.dataset.ft})));
+  document.querySelectorAll("[data-fsig]").forEach(el=>el.addEventListener("click",()=>set({filterSig:el.dataset.fsig})));
+  document.querySelectorAll("[data-ftk]").forEach(el=>el.addEventListener("click",()=>set({filterTicket:el.dataset.ftk})));
+
+  document.querySelectorAll("[data-tm]").forEach(el=>el.addEventListener("click",()=>{
+    const id=parseInt(el.dataset.tm);
+    members=members.map(m=>m.id===id?{...m,statut:m.statut==="actif"?"suspendu":"actif"}:m);
+    sync();toast("✅ Statut mis à jour + synchronisé");
+  }));
+  document.querySelectorAll("[data-dm]").forEach(el=>el.addEventListener("click",()=>{
+    if(!confirm("Supprimer ce membre ?"))return;
+    members=members.filter(m=>m.id!==parseInt(el.dataset.dm));
+    sync();toast("Membre supprimé","#ef4444");
+  }));
+  document.querySelectorAll("[data-kyc-ok]").forEach(el=>el.addEventListener("click",()=>{
+    const id=parseInt(el.dataset.kycOk);
+    members=members.map(m=>String(m.id)===String(id)?{...m,id_statut:"approuvé",verifie:true}:m);
+    sync();toast("✅ KYC approuvé + synchronisé !");
+  }));
+  document.querySelectorAll("[data-kyc-ko]").forEach(el=>el.addEventListener("click",()=>{
+    const id=parseInt(el.dataset.kycKo);
+    members=members.map(m=>String(m.id)===String(id)?{...m,id_statut:"refusé",verifie:false}:m);
+    sync();toast("❌ KYC refusé + synchronisé","#ef4444");
+  }));
+  document.querySelectorAll("[data-conv]").forEach(el=>el.addEventListener("click",()=>set({selConv:parseInt(el.dataset.conv)})));
+  document.querySelectorAll("[data-flag]").forEach(el=>el.addEventListener("click",()=>{
+    const i=parseInt(el.dataset.flag);conversations[i].flag=true;sync();toast("🚩 Flaggée + synchronisé","#ef4444");
+  }));
+  document.querySelectorAll("[data-unflag]").forEach(el=>el.addEventListener("click",()=>{
+    const i=parseInt(el.dataset.unflag);conversations[i].flag=false;sync();toast("✅ Flag levé + synchronisé");
+  }));
+  document.querySelectorAll("[data-td]").forEach(el=>el.addEventListener("click",()=>{
+    const id=parseInt(el.dataset.td);
+    demandes=demandes.map(d=>d.id===id?{...d,statut:d.statut==="active"?"suspendue":"active"}:d);
+    sync();toast("✅ Annonce mise à jour + synchronisé");
+  }));
+  document.querySelectorAll("[data-dd]").forEach(el=>el.addEventListener("click",()=>{
+    if(!confirm("Supprimer cette annonce ?"))return;
+    demandes=demandes.filter(d=>d.id!==parseInt(el.dataset.dd));
+    sync();toast("Annonce supprimée","#ef4444");
+  }));
+  document.querySelectorAll("[data-rl]").forEach(el=>el.addEventListener("click",()=>{
+    transactions=transactions.map(t=>t.id===el.dataset.rl?{...t,litige:false,statut:"payée"}:t);
+    sync();toast("✅ Litige résolu + synchronisé !");
+  }));
+  document.querySelectorAll("[data-lib]").forEach(el=>el.addEventListener("click",()=>{
+    transactions=transactions.map(t=>t.id===el.dataset.lib?{...t,statut:"payée",litige:false}:t);
+    sync();toast("💰 Paiement libéré + synchronisé !");
+  }));
+  document.querySelectorAll("[data-ctk]").forEach(el=>el.addEventListener("click",()=>{
+    tickets=tickets.map(t=>t.id===el.dataset.ctk?{...t,statut:"fermé"}:t);
+    sync();toast("✅ Ticket fermé + synchronisé !");
+  }));
+  document.querySelectorAll("[data-iptk]").forEach(el=>el.addEventListener("click",()=>{
+    tickets=tickets.map(t=>t.id===el.dataset.iptk?{...t,statut:"en cours"}:t);
+    sync();toast("🔄 Ticket mis en cours + synchronisé");
+  }));
+  document.querySelectorAll("[data-ts]").forEach(el=>el.addEventListener("click",()=>{
+    signalements=signalements.map(s=>s.id===parseInt(el.dataset.ts)?{...s,statut:"traité"}:s);
+    sync();toast("✅ Traité");
+  }));
+  document.querySelectorAll("[data-ss]").forEach(el=>el.addEventListener("click",()=>{
+    const sig=signalements.find(s=>s.id===parseInt(el.dataset.ss));
+    if(sig){members=members.map(m=>m.nom===sig.cible?{...m,statut:"suspendu"}:m);signalements=signalements.map(s=>s.id===parseInt(el.dataset.ss)?{...s,statut:"traité"}:s);}
+    sync();toast("🚫 Utilisateur suspendu + synchronisé","#ef4444");
+  }));
+  document.querySelectorAll("[data-ds]").forEach(el=>el.addEventListener("click",()=>{
+    signalements=signalements.filter(s=>s.id!==parseInt(el.dataset.ds));
+    sync();toast("Supprimé","#ef4444");
+  }));
+  document.getElementById("btn-sc")?.addEventListener("click",()=>{
+    params.commission=parseFloat(document.getElementById("cfg-c")?.value)||18;
+    sync();toast("✅ Commission sauvegardée + synchronisée !");
+  });
+  document.getElementById("btn-sg")?.addEventListener("click",()=>{
+    params.zone=document.getElementById("cfg-z")?.value||params.zone;
+    params.villes=document.getElementById("cfg-v")?.value||params.villes;
+    sync();toast("✅ Zone sauvegardée + synchronisée !");
+  });
+  document.getElementById("btn-sm2")?.addEventListener("click",()=>{
+    params.motsBanis=document.getElementById("cfg-mb")?.value||params.motsBanis;
+    sync();toast("✅ Mots-clés sauvegardés + synchronisés !");
+  });
+  document.getElementById("btn-force-sync")?.addEventListener("click",()=>{
+    sync();toast("🔄 Synchronisation forcée !");
+  });
+  document.getElementById("btn-import")?.addEventListener("click",()=>{
+    const raw=document.getElementById("import-data")?.value;
+    if(!raw||!raw.trim()){toast("Collez d'abord les données","#ef4444");return;}
+    let d;
+    try{d=JSON.parse(raw);}catch(e){toast("JSON invalide","#ef4444");return;}
+    const mergeById=(local,incoming)=>{
+      if(!incoming)return local;
+      const map=new Map(local.map(x=>[x.id,x]));
+      incoming.forEach(x=>map.set(x.id,{...(map.get(x.id)||{}),...x}));
+      return Array.from(map.values());
+    };
+    members=mergeById(members,d.members);
+    demandes=mergeById(demandes,d.demandes);
+    transactions=mergeById(transactions,d.transactions);
+    signalements=mergeById(signalements,d.signalements);
+    tickets=mergeById(tickets,d.tickets);
+    services=mergeById(services,d.services);
+    conversations=mergeById(conversations,d.conversations);
+    notifications=mergeById(notifications,d.notifications);
+    if(d.params)params={...params,...d.params};
+    sync();
+    toast("✅ Données importées et fusionnées !");
+  });
+  document.getElementById("btn-reset-all-top")?.addEventListener("click",resetAll);
+  document.getElementById("btn-reset-all")?.addEventListener("click",resetAll);
+}
+
+// Polling de synchronisation (toutes les 2s)
+let _lastTs=saved?saved.ts:null;
+setInterval(()=>{
+  const d=loadShared();
+  if(d&&d.ts&&d.ts!==_lastTs){
+    _lastTs=d.ts;
+    if(d.members)members=d.members;
+    if(d.demandes)demandes=d.demandes;
+    if(d.transactions)transactions=d.transactions;
+    if(d.signalements)signalements=d.signalements;
+    if(d.tickets)tickets=d.tickets;
+    if(d.services)services=d.services;
+    if(d.conversations)conversations=d.conversations;
+    if(d.notifications)notifications=d.notifications;
+    if(d.params)params=d.params;
+    if(S.page==="dash")render();
+  }
+},2000);
+
+render();
+</script>
+</body>
+</html>
